@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function AddTweet() {
+function AddTweet({ onAddTweet }) {
   const [text, setText] = useState("");
   return (
     <>
@@ -12,6 +12,7 @@ function AddTweet() {
 
       <button
         onClick={() => {
+          onAddTweet(text);
           setText("");
         }}
       >

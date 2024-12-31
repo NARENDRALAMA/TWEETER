@@ -1,10 +1,49 @@
+import { useState } from "react";
 import "../CSS/Tweet.css";
 
-function Tweet({ content, likeCount }) {
+function Tweet({ tweetId, content, likeCount, createdAt, onEdit }) {
+  const [isEditing, setIsEditing] = useState(false);
+
   return (
     <div className="tweet-wrapper">
-      <div className="tweet-content">{content}</div>
-      <div className="likes">{likeCount} likes</div>
+      <div className="tweet-edit-wrapper">
+        <div className="tweet-content">
+          {isEditing ? (
+            <input
+              type="text"
+              value={content}
+              onChange={(e) =>
+                onEdit({
+                  id: tweetId,
+                  content: e.target.value,
+                  likeCount: likeCount,
+                  createdAt: createdAt,
+                })
+              }
+            />
+          ) : (
+            content
+          )}
+        </div>
+
+        <div className="edit-tweet">
+          <div onClick={() => setIsEditing(!isEditing)}>
+            <button>{isEditing ? "Save" : "Edit"}</button>
+          </div>
+        </div>
+      </div>
+
+      <div className="like-createdAt-wrapper">
+        <div className="likes">
+          {likeCount}
+          likes
+        </div>
+
+        <div className="created-at">
+          {" "}
+          <b>Tweeted at</b> {createdAt}
+        </div>
+      </div>
     </div>
   );
 }
